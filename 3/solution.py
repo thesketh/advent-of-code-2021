@@ -9,10 +9,10 @@ from typing import Sequence, List, Literal
 
 ROOT = Path(__file__).absolute().parent
 
-PositionBit = int
-PositionSequence = Sequence[PositionBit]
 DiagnosticBit = int
 DiagnosticArray = List[DiagnosticBit]
+PositionBit = int
+PositionSequence = Sequence[PositionBit]
 
 
 def parse_diagnostic_input(path: PathLike) -> List[DiagnosticArray]:

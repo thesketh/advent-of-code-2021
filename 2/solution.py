@@ -107,7 +107,10 @@ def main():
     distance = calculate_distance(input_list)
     print(f"Calculated distance travelled to be {distance} units.")
     distance = calculate_distance(input_list, read_manual=True)
-    print(f"Calculated distance travelled to be {distance} units after reading manual")
+    print(
+        f"Calculated distance travelled to be {distance} units "
+        + "(after reading manual)."
+    )
 
 
 if __name__ == "__main__":
