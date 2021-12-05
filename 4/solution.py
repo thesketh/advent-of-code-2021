@@ -10,10 +10,15 @@ from typing import FrozenSet, Iterator, Optional, Sequence, Set, Tuple
 ROOT = Path(__file__).absolute().parent
 
 Grid = Sequence[Sequence[int]]
+"""A representation of a bingo board as a list of lists (rows) of integers."""
 Row = FrozenSet[int]
+"""A row in a bingo board."""
 Column = FrozenSet[int]
+"""A column in a bingo board."""
 BoardScore = int
+"""The bingo board's contribution to the final score."""
 Score = int
+"""The score of the board. A `BoardScore` multiplied by the last number called."""
 
 
 class BingoBoard:
@@ -47,8 +52,8 @@ class BingoBoard:
 
 def parse_input(path: PathLike) -> Tuple[Sequence[BingoBoard], Sequence[int]]:
     """
-    Parse the bingo input, returning a list of numbers being called and a
-    sequence of Boards.
+    Parse the bingo input, returning a sequence of `BingoBoard`s and a sequence
+    of the numbers being called.
 
     """
     boards = []
@@ -71,11 +76,11 @@ def parse_input(path: PathLike) -> Tuple[Sequence[BingoBoard], Sequence[int]]:
 
 
 def get_winning_scores(
-    boards: Sequence[BingoBoard], number_sequence: Sequence[int]
+    boards: Sequence[BingoBoard], number_sequence: Iterator[int]
 ) -> Iterator[Tuple[BingoBoard, Score]]:
     """
     Check a sequence of bingo boards, yielding the board and score in order of
-    when they won.
+    when the board won.
 
     """
     number_iterator = iter(number_sequence)
@@ -102,7 +107,7 @@ def get_winning_scores(
 
 
 def main():
-    """Read in the data and calculate the first and last bingo scores."""
+    """Read in the data and output the first and last bingo scores."""
     boards, number_sequence = parse_input(ROOT.joinpath("data", "input_1.txt"))
     score_iterator = get_winning_scores(boards, number_sequence)
 
