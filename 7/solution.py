@@ -67,9 +67,9 @@ def get_min_fuel_usage(
                 continue
 
             new_usage = calc_fuel_usage(crab_positions, new_position)
+            tested_positions.add(new_position)
             if new_usage < fuel_usage:
                 fuel_usage = new_usage
-                tested_positions.add(new_position)
                 test_position = new_position
                 break
         else:
