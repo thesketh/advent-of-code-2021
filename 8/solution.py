@@ -153,7 +153,11 @@ def parse_input(path: PathLike) -> List[Tuple[Display, DisplayDigits]]:
 
 
 def main():
-    """Count the number of 1s, 4s, 7s, and 8s in the output."""
+    """
+    Count the number of 1s, 4s, 7s, and 8s in the output, and sum the
+    output values.
+    
+    """
     input_data = parse_input(ROOT.joinpath("data", "input_1.txt"))
 
     total, count_simple = 0, 0
