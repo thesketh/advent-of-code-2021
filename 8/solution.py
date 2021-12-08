@@ -104,7 +104,7 @@ class Display:  # pylint: disable=too-few-public-methods
         return int("".join(values))
 
     @staticmethod
-    def count_unambiguos(display_digits: List[SegmentString]) -> int:
+    def count_unambiguous(display_digits: List[SegmentString]) -> int:
         """
         Count the unambiguous characters in the display (those which can be
         identified from length alone).
@@ -156,13 +156,13 @@ def main():
     """
     Count the number of 1s, 4s, 7s, and 8s in the output, and sum the
     output values.
-    
+
     """
     input_data = parse_input(ROOT.joinpath("data", "input_1.txt"))
 
     total, count_simple = 0, 0
     for display, display_digits in input_data:
-        count_simple += display.count_unambiguos(display_digits)
+        count_simple += display.count_unambiguous(display_digits)
         total += display.render(display_digits)
 
     print(f"1, 4, 7 and 8 occur {count_simple} times in output.")

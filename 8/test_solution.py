@@ -14,7 +14,7 @@ def test_count_unambiguous_output_digits():
     input_data = parse_input(ROOT.joinpath("data", "test_input_1.txt"))
     count_simple = 0
     for display, display_digits in input_data:
-        count_simple += display.count_unambiguos(display_digits)
+        count_simple += display.count_unambiguous(display_digits)
 
     assert count_simple == 26
 
