@@ -1,5 +1,6 @@
 """
-Solution to the seventh challenge, aligning crab submarines.
+Solution to the ninth challenge, calculating risk from hydrothermal
+vents.
 
 """
 from functools import reduce
