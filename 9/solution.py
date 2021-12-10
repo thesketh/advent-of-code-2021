@@ -83,13 +83,12 @@ def get_depressions(height_map: HeightMap) -> Dict[Position, Height]:
     return depressions
 
 
-def calculate_risk_level_positional(height_map: HeightMap) -> int:
+def calculate_risk_level_positional(depressions: Dict[Position, Height]) -> int:
     """
     Calculate the risk level of a height map based only on single
     positions.
 
     """
-    depressions = get_depressions(height_map)
     return sum([height + 1 for height in depressions.values()])
 
 
@@ -139,13 +138,12 @@ def get_basin(
     return basin
 
 
-def calculate_risk_level_basins(height_map: HeightMap) -> int:
+def calculate_risk_level_basins(height_map: HeightMap, depressions: Dict[Position, Height]) -> int:
     """
     Calculate the risk level of a height map based on the three
     largest basins.
 
     """
-    depressions = get_depressions(height_map)
     basins = [get_basin(height_map, depression) for depression in depressions]
     basin_sizes = sorted(map(len, basins), reverse=True)
     return reduce(mul, basin_sizes[0:3], 1)
@@ -154,11 +152,12 @@ def calculate_risk_level_basins(height_map: HeightMap) -> int:
 def main():
     """Scan the height map for danger."""
     height_map = parse_input(ROOT.joinpath("data", "input_1.txt"))
+    depressions = get_depressions(height_map)
 
-    risk_level = calculate_risk_level_positional(height_map)
+    risk_level = calculate_risk_level_positional(depressions)
     print(f"The risk level is {risk_level} based on single positions.")
 
-    risk_level = calculate_risk_level_basins(height_map)
+    risk_level = calculate_risk_level_basins(height_map, depressions)
     print(f"The risk level is {risk_level} based on basins.")
 
 
