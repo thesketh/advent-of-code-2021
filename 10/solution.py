@@ -49,7 +49,7 @@ Mismatch = str
 
 
 def parse_input(path: PathLike) -> List[str]:
-    """Return a sequence of brackets."""
+    """Parse a list of strings from the input."""
     with open(path, "r", encoding="utf-8") as file:
         return list(map(str.rstrip, file))
 
@@ -57,27 +57,31 @@ def parse_input(path: PathLike) -> List[str]:
 def identify_bracket_errors(
     string: str,
 ) -> Tuple[Optional[Mismatch], Optional[Completion]]:
-    """Identify the first mismatched bracket from a string."""
+    """Identify mismatched and uncompleted brackets in strings."""
     brackets: Deque[str] = deque()
 
     for char in string:
         if char in OPEN_BRACKETS:
             brackets.append(char)
-        elif not brackets:
-            return char, None
-        else:
-            expected = BRACKETS[brackets.pop()]
-            if char != expected and char in CLOSE_BRACKETS:
+        elif char in CLOSE_BRACKETS:
+            try:
+                expected = BRACKETS[brackets.pop()]
+            except IndexError:
                 return char, None
 
-    brackets.reverse()
-    return None, "".join(map(BRACKETS.__getitem__, brackets))
+            if char != expected:
+                return char, None
+
+    if brackets:
+        brackets.reverse()
+        return None, "".join(map(BRACKETS.__getitem__, brackets))
+    return None, None
 
 
 def score_mismatches(mismatches: Iterable[Mismatch]) -> int:
     """
     Score a collection of mismatched brackets, according to the rules for
-    syntax checkers.
+    syntax checkers (summing the scores).
 
     """
     return sum(map(BRACKET_SYNTAX_SCORES.__getitem__, mismatches))
@@ -85,7 +89,8 @@ def score_mismatches(mismatches: Iterable[Mismatch]) -> int:
 
 def score_completions(completions: Iterable[Completion]) -> int:
     """
-    Score a list of completions, according to the rules for auto-formatters.
+    Score a list of completions, according to the rules for auto-formatters
+    (taking the median score).
 
     """
     scores = []
